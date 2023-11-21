@@ -1,0 +1,39 @@
+; Dune has three kind of programs:
+; - executable - the program we run.
+; - library - modules used by the program we run.
+; - test - an executable containing one or more tests
+;
+; NOTE: In this project we are only using inline_test to write tests. This
+; means that our tests exists in our library, not a separate executable.
+
+(executable
+ ; The "entrypoint" for this module is the `runner.ml` file
+ (name runner)
+ ; Because we are defining both an executable and a library
+ ; we must explicitly fill the `modules` field
+ (modules runner)
+ ; Allows us to `dune exec 1` to run this executable
+ (public_name 1)
+ ; We are using our own library `puzzle_01`, defined below
+ (libraries puzzle_01))
+
+(library
+ ; The "entrypoint" for this module is the `puzzle_01.ml` file
+ (name puzzle_01)
+ ; Because we are defining both an executable and a library
+ ; we must explicitly fill the `modules` field. Dune error told me this.
+ (modules puzzle_01)
+ ; Added every library here, `open` them when needed
+ (libraries aoc angstrom containers oseq psq ppx_expect.evaluator sexplib)
+ ; This file contains inline tests
+ (inline_tests)
+ ; See https://ocaml.org/docs/metaprogramming#ppxs
+ (preprocess
+  ; The ppx:es we are using
+  (pps ppx_inline_test ppx_assert ppx_expect ppx_deriving.show))
+ ; Compilation flags
+ (flags
+  ; Open our Aoc module (the ../lib folder).
+  ; This saves us doing from `open Aoc` manually for things we always use.
+  ; open some dependencies needed for tests.
+  (:standard -open Aoc -open Ppx_compare_lib.Builtin -open Sexplib.Std)))

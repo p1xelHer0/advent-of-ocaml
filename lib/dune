@@ -1,0 +1,8 @@
+(library
+ (name aoc)
+ (libraries containers sexplib)
+ (inline_tests)
+ (preprocess
+  (pps ppx_inline_test ppx_assert ppx_expect ppx_deriving.show))
+ (flags
+  (:standard -open Aoc -open Ppx_compare_lib.Builtin -open Sexplib.Std)))

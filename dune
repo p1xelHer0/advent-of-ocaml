@@ -1,0 +1,67 @@
+; `dune` files in each directory specify the component to be built with the files in that directory.
+; This is our top level dune file, it configures modification for our whole programming environment
+
+(env
+ ; Configure the dev compilation profile - the one we use by default.
+ ; We are not making any release builds today.
+ (dev
+  ; OCaml compilation flags
+  (flags
+   ; Configure compiler warnings
+   ; Dune makes all warnings fatal by default.
+   ;
+   ; -w      Means we are configuring warnings.
+   ; -num    Disable warning number num.
+   ; +num    Enable warning number num.
+   ; -26     [unused-var] - disable.
+   ; -27     [unused-var-strict] - disable.
+   ; -32     [unused-value-declaration] - disable.
+   ; -33     [unused-open] - disable.
+   ;         Disable this for something as hacky as Advent of Code.
+   ;
+   ; for more info see `man ocamlc` and look for `-w warning-list`.
+   (:standard -w -26-27-32-33))))
+
+; if you want to disable EVERY warning you can do the following:
+; (:standard -w -A))))
+
+; Make warning non-fatal, use `-warn-error` flag instead of `-w`.
+; (:standard -warn-error -32))))
+
+; Define a Dune rule
+
+(rule
+ ; Aliases in Dune are referred to with the @ sign.
+ ; This means this alias below is `@1`.
+ ; We can run this alias with `dune build @1`.
+ (alias 2)
+ ; Dependencies for the alias
+ (deps ./day_01/input ./bin/pp.ml)
+ ; This alias is an action - we want to do something
+ (action
+  ; Progn runs multiple processes in sequence
+  (progn
+   ; First we build day_01
+   (run dune build ./day_01)
+   ; We want to pipe the result of the process we are running to stdout
+   (pipe-stdout
+    ; This lets us define which exit codes we consider ok
+    (with-accepted-exit-codes
+     ; Ignore erronous exit codes to prevent stack trace on test failures
+     (or 0 1)
+     ; Run the inline tests for day_1
+     ; (run ./day_01/.puzzle_01.inline-tests/inline_test_runner_puzzle_01.exe))
+     (run dune test ./day_01))
+    ; This is were we pipe the stdout - to our pretty printer
+    (run ./bin/pp.exe))
+   ; After we have ran the tests into our pretty printer we run the day_01
+   ; program itself
+   (run ./day_01/runner.exe))))
+
+(rule
+ (alias 1)
+ (deps ./day_01/input ./bin/pp.ml)
+ (action
+  (progn
+   (run dune build ./day_01)
+   (run ./day_01/runner.exe))))
