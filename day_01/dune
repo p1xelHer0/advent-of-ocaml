@@ -4,7 +4,7 @@
 ; - test - an executable containing one or more tests
 ;
 ; NOTE: In this project we are only using inline_test to write tests. This
-; means that our tests exists in our library, not a separate executable.
+; means that our tests exists in our library.
 
 (executable
  ; The "entrypoint" for this module is the `runner.ml` file
@@ -33,7 +33,7 @@
   (pps ppx_inline_test ppx_assert ppx_expect ppx_deriving.show))
  ; Compilation flags
  (flags
-  ; Open our Aoc module (the ../lib folder).
+  ; `open` our Aoc module (the ../lib folder).
   ; This saves us doing from `open Aoc` manually for things we always use.
-  ; open some dependencies needed for tests.
+  ; `open` some dependencies needed for tests.
   (:standard -open Aoc -open Ppx_compare_lib.Builtin -open Sexplib.Std)))

@@ -1,4 +1,0 @@
-(executable
- (name pp)
- (public_name alctotest_pp)
- (libraries aoc angstrom containers fmt))

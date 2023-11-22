@@ -17,7 +17,6 @@ setup: ## Install project and development dependencies
 	opam switch create . 5.1.0 --no-install
 	opam install . -y --deps-only --with-test
 	opam install -y ocamlformat=0.26.1 ocaml-lsp-server utop
-	build
 
 .PHONY: build
 build: ## Build the project
@@ -25,7 +24,7 @@ build: ## Build the project
 
 .PHONY: watch
 watch: ## Run build in "watch mode" - requires fswatch or inotifywait
-	dune build --root . -fw --no-buffer
+	dune build --root . -fw
 
 .PHONY: test
 test: ## Run tests
@@ -33,7 +32,7 @@ test: ## Run tests
 
 .PHONY: test-watch
 test-watch: ## Run tests in "watch mode" - requires fswatch or inotifywait
-	dune build --root . @runtest -fw --no-buffer
+	dune build --root . @runtest -fw
 
 .PHONY: clean
 clean: ## Clean the project
@@ -46,6 +45,10 @@ fmt: ## Format source code
 .PHONY: utop
 utop: ## Run a REPL
 	dune utop --root . . -- -implicit-bindings
+
+.PHONY: reset
+reset: ## Remove local opam switch
+	rm -rf ./_opam
 
 ## Don't look further, my Makefile skills is around 0!
 .PHONY: day1

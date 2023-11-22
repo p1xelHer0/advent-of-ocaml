@@ -1,0 +1,15 @@
+(executable
+ (name runner)
+ (modules runner)
+ (public_name 2)
+ (libraries puzzle_02))
+
+(library
+ (name puzzle_02)
+ (modules puzzle_02)
+ (libraries aoc angstrom containers oseq psq ppx_expect.evaluator sexplib)
+ (inline_tests)
+ (preprocess
+  (pps ppx_inline_test ppx_assert ppx_expect ppx_deriving.show))
+ (flags
+  (:standard -open Aoc -open Ppx_compare_lib.Builtin -open Sexplib.Std)))

@@ -56,7 +56,7 @@ module B = struct
 
   let%expect_test _ =
     Printf.printf "%i" (solve test_input);
-    [%expect {| 0 |}]
+    [%expect {| 1 |}]
 end
 
 (* Print the test and result however you want. *)

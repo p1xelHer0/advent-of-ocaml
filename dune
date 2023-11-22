@@ -34,33 +34,28 @@
  ; Aliases in Dune are referred to with the @ sign.
  ; This means this alias below is `@1`.
  ; We can run this alias with `dune build @1`.
- (alias 2)
+ (alias 1testing)
  ; Dependencies for the alias
- (deps ./day_01/input ./bin/pp.ml)
+ (deps ./day_01/input)
  ; This alias is an action - we want to do something
  (action
   ; Progn runs multiple processes in sequence
   (progn
    ; First we build day_01
    (run dune build ./day_01)
-   ; We want to pipe the result of the process we are running to stdout
-   (pipe-stdout
-    ; This lets us define which exit codes we consider ok
-    (with-accepted-exit-codes
-     ; Ignore erronous exit codes to prevent stack trace on test failures
-     (or 0 1)
-     ; Run the inline tests for day_1
-     ; (run ./day_01/.puzzle_01.inline-tests/inline_test_runner_puzzle_01.exe))
-     (run dune test ./day_01))
-    ; This is were we pipe the stdout - to our pretty printer
-    (run ./bin/pp.exe))
-   ; After we have ran the tests into our pretty printer we run the day_01
-   ; program itself
+   ; Run the day_01 program itself
+   (run dune runtest ./day_01)
+   ; Run the test executable directly, no?
+   (run
+    /day_01/.puzzle_01.inline-tests/inline_test_runner_puzzle_01.exe
+    inline-test-runner
+    Puzzle_01)
+   ; Run the day_01 program itself
    (run ./day_01/runner.exe))))
 
 (rule
  (alias 1)
- (deps ./day_01/input ./bin/pp.ml)
+ (deps ./day_01/input)
  (action
   (progn
    (run dune build ./day_01)
