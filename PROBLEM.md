@@ -2,6 +2,9 @@ Hi folks! I have some problems I want to solve: I am building a little
 boilerplate project for https://adventofcode.com/ and I've stumbled into some
 problems in regards to `dune exec`, `dune test` and `--watch`:
 
+Excuse my long thread but I felt it was better to write down everything I've tried. the project looks like this can can be found in the `development` branch here https://github.com/p1xelHer0/advent-of-ocaml/tree/development
+
+```
 .
 ├── \_build
 ├── \_opam
@@ -16,6 +19,7 @@ problems in regards to `dune exec`, `dune test` and `--watch`:
 ├── aoc.opam
 ├── dune
 └── dune-project
+```
 
 The idea here is that each day I, or some other user, would start a
 
@@ -23,7 +27,9 @@ The idea here is that each day I, or some other user, would start a
 
 and a
 
-`dune test ./day_01-w`
+`dune test ./day_01 -w`
+
+To get immediate feedback on the test of the example data and the output of the written program.
 
 Now, this does not work since dune locks the `_build` directory.
 This lock CAN be disabled with setting `DUNE_CONFIG__GLOBAL_LOCK=disabled` but
@@ -52,7 +58,7 @@ command:
 
 The issue now become that the `runtest` alias runs ALL the tests of the project,
 not just the test for `day_01`. So if I user leaves Day 1 of Advent of Code
-uncomlpete and move on to day 2 they'd have to clean up the file before moving
+uncompleted and move on to day 2 they'd have to clean up the file before moving
 on. That's not good!
 
 I have not been able to pass parameters to the `runtest` alias when using the
@@ -109,10 +115,10 @@ I can verify by passing the `-show-counts` option to the test:
 Maybe I am missing something here? There also seems to be an issue open in
 regards to running a single test, not sure if related to this: https://github.com/janestreet/ppx_inline_test/issues/34
 
-So in the end, ``dune build @1 @runtest -w` is the closest I've gotten. But I
+So in the end, `dune build @1 @runtest -w` is the closest I've gotten. But I
 don't feel like it's good enough. I can do better. I would like the `runtest`
 alias only run the tests in the `day_01` folder.
 
 Thank you so much for taking your time to read this! I realize now that I
-shoul've asked for help much earlier but on the flipside I've learned a lot
-about dune!
+should've asked for help much earlier but on the flip side I've learned a lot
+about dune! Am I even approaching this problem from the right angle? :smiley:
