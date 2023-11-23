@@ -14,26 +14,55 @@
  (modules runner)
  ; Allows us to `dune exec 1` to run this executable
  (public_name 1)
- ; We are using our own library `puzzle_01`, defined below
- (libraries puzzle_01))
+ ; We are using our own library `solution_01`, defined below
+ (libraries solution_01))
 
 (library
- ; The "entrypoint" for this module is the `puzzle_01.ml` file
- (name puzzle_01)
+ ; The "entrypoint" for this module is the `solution_01.ml` file
+ (name solution_01)
  ; Because we are defining both an executable and a library
  ; we must explicitly fill the `modules` field. Dune error told me this.
- (modules puzzle_01)
+ (modules solution_01)
  ; Added every library here, `open` them when needed
- (libraries aoc angstrom containers oseq psq ppx_expect.evaluator sexplib)
+ (libraries aoc angstrom containers oseq)
  ; This file contains inline tests
  (inline_tests)
  ; See https://ocaml.org/docs/metaprogramming#ppxs
  (preprocess
   ; The ppx:es we are using
-  (pps ppx_inline_test ppx_assert ppx_expect ppx_deriving.show))
+  (pps ppx_inline_alcotest ppx_deriving.show))
  ; Compilation flags
  (flags
   ; `open` our Aoc module (the ../lib folder).
   ; This saves us doing from `open Aoc` manually for things we always use.
-  ; `open` some dependencies needed for tests.
-  (:standard -open Aoc -open Ppx_compare_lib.Builtin -open Sexplib.Std)))
+  (:standard -open Aoc)))
+
+(rule
+ ; Aliases in Dune are referred to with the @ sign.
+ ; This means this alias below is `@1`.
+ ; We can run this alias with `dune build @1`.
+ (alias 1)
+ ; Dependencies for the alias
+ ; Run runner needs the input file to run the real solution
+ ; Also the pretty printer where we strip some parts of the alcotest output
+ (deps ./input %{project_root}/bin/pp.exe)
+ ; This alias is an action - we want to do something
+ (action
+  (chdir
+   %{project_root}
+   ; Progn runs multiple processes in sequence
+   (progn
+    ; First we build day_01
+    (run dune build ./day_01)
+    ; Pipe the result of the inline test to `pp.exe`
+    (pipe-stdout
+     ; Allow 1 as a non-erronous exit code to prevent dune stack trace
+     (with-accepted-exit-codes
+      (or 0 1)
+      ; Run inline tests for day_01
+      (run
+       ./day_01/.solution_01.inline-tests/inline_test_runner_solution_01.exe))
+     ; Filter some output of the test
+     (run ./bin/pp.exe))
+    ; Run the day_01 program itself
+    (run ./day_01/runner.exe)))))

@@ -15,11 +15,9 @@ depends: [
   "containers" {>= "3.12"}
   "oseq" {>= "0.5"}
   "psq" {>= "0.2.1"}
-  "sexplib" {>= "0.16.0"}
   "ppx_deriving" {>= "5.2.1"}
-  "ppx_inline_test" {>= "0.16.1"}
-  "ppx_assert" {with-test & >= "0.16.0"}
-  "ppx_expect" {with-test & >= "0.16.0"}
+  "alcotest" {with-test & >= "1.7.0"}
+  "ppx_inline_alcotest" {with-test & >= "1.0.0"}
   "ocaml-lsp-server" {with-dev-setup & >= "1.16.2"}
   "ocamlformat" {with-dev-setup & >= "0.26.1"}
   "utop" {with-dev-setup & >= "2.13.1"}

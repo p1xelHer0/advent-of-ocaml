@@ -1,1 +1,1 @@
-Puzzle_02.run ()
+Solution_02.run ()

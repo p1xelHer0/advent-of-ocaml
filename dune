@@ -17,7 +17,7 @@
    ; -27     [unused-var-strict] - disable.
    ; -32     [unused-value-declaration] - disable.
    ; -33     [unused-open] - disable.
-   ;         Disable this for something as hacky as Advent of Code.
+   ;         Disable these for something as hacky as Advent of Code.
    ;
    ; for more info see `man ocamlc` and look for `-w warning-list`.
    (:standard -w -26-27-32-33))))
@@ -28,35 +28,7 @@
 ; Make warning non-fatal, use `-warn-error` flag instead of `-w`.
 ; (:standard -warn-error -32))))
 
-; Define a Dune rule
-
 (rule
- ; Aliases in Dune are referred to with the @ sign.
- ; This means this alias below is `@1`.
- ; We can run this alias with `dune build @1`.
- (alias 1testing)
- ; Dependencies for the alias
- (deps ./day_01/input)
- ; This alias is an action - we want to do something
+ (alias default)
  (action
-  ; Progn runs multiple processes in sequence
-  (progn
-   ; First we build day_01
-   (run dune build ./day_01)
-   ; Run the day_01 program itself
-   (run dune runtest ./day_01)
-   ; Run the test executable directly, no?
-   (run
-    /day_01/.puzzle_01.inline-tests/inline_test_runner_puzzle_01.exe
-    inline-test-runner
-    Puzzle_01)
-   ; Run the day_01 program itself
-   (run ./day_01/runner.exe))))
-
-(rule
- (alias 1)
- (deps ./day_01/input)
- (action
-  (progn
-   (run dune build ./day_01)
-   (run ./day_01/runner.exe))))
+  (echo "There is nothing to build here!\nConsider building a specific day using:\n`dune build@1`\nwhere `1` is the day.\nIf something goes wrong you can clean the project with `dune clean`.")))

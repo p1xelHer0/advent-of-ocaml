@@ -49,26 +49,21 @@
   ; Functional Priority Search Queues
   (psq
    (>= 0.2.1))
-  ; Library for serializing OCaml values to and from S-expressions
-  (sexplib
-    (>= 0.16.0))
   ; Mainly for ppx_deriving.show
   ; show derives a function that inspects a value; that is, pretty-prints it with OCaml syntax
   (ppx_deriving
    (>= 5.2.1))
-  (ppx_inline_test
-   (>= 0.16.1))
-  (ppx_assert
+  ; A lightweight and colourful test framework
+  (alcotest
    (and
-    ; For tests
+    ; Test dependency - https://opam.ocaml.org/doc/Manual.html#pkgvar-with-test
     :with-test
-    (>= 0.16.0)))
-  (ppx_expect
+    (>= 1.7.0)))
+  (ppx_inline_alcotest
    (and
-    ; For tests
+    ; Test dependency
     :with-test
-    (>= 0.16.0)))
-  ; An LSP server for OCaml.
+    (>= 1.0.0)))
   (ocaml-lsp-server
    (and
     ; Developer tooling - https://opam.ocaml.org/doc/Manual.html#pkgvar-with-dev-setup

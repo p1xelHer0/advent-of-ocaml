@@ -2,14 +2,29 @@
  (name runner)
  (modules runner)
  (public_name 2)
- (libraries puzzle_02))
+ (libraries solution_02))
 
 (library
- (name puzzle_02)
- (modules puzzle_02)
- (libraries aoc angstrom containers oseq psq ppx_expect.evaluator sexplib)
+ (name solution_02)
+ (modules solution_02)
+ (libraries aoc angstrom containers oseq)
  (inline_tests)
  (preprocess
-  (pps ppx_inline_test ppx_assert ppx_expect ppx_deriving.show))
+  (pps ppx_inline_alcotest ppx_deriving.show))
  (flags
-  (:standard -open Aoc -open Ppx_compare_lib.Builtin -open Sexplib.Std)))
+  (:standard -open Aoc)))
+
+(rule
+ (alias 2)
+ (deps ./input %{project_root}/bin/pp.exe)
+ (action
+  (chdir
+   %{project_root}
+   (progn
+    (run dune build ./day_02)
+    (pipe-stdout
+     (with-accepted-exit-codes
+      (or 0 1)
+      (run ./day_02/.solution_02.inline-tests/inline_test_runner_solution_02.exe))
+     (run ./bin/pp.exe))
+    (run ./day_02/runner.exe)))))

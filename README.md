@@ -12,13 +12,40 @@ it by following the official instructions:
 After Opam has been installed you can use the provided `Makefile` to get
 going:
 
+> NOTE: If you already have an old installation of Opam make sure you run `opam
+update` before setting up
+
 ```
 make setup
+```
+
+After the installation you can build the project with
+
+```
+make build
+```
+
+To start working on a day run
+
+```
+make day1
 ```
 
 ## Before coding
 
 https://adventofcode.com/2023/about
+
+> Some personal notes:
+>
+> Advent of Code is _hard_.
+>
+> I don't work with these kind of algorithm-y problems on a day-to-day basis. I guess most people don't. It's very easy to get imposter syndrome and compare yourself to others. Others that do good in Advent of Code has probably done so for some time.
+>
+> Find a group and discuss the problems with others. You probably have a colleague at work that does Advent of Code without you even knowing.
+>
+> Focus on learning and having fun.
+>
+> And lose a bit of sleep!
 
 ## Learning material
 
@@ -39,12 +66,13 @@ https://adventofcode.com/2023/about
 - Real World OCaml 2nd Edition: http://dev.realworldocaml.org/
 
   > Note: Real World OCaml uses the alternative standard library [Base](https://github.com/janestreet/base)
-  > If you want to use this, check out the [base branch](https://github.com/p1xelHer0/advent-of-ocaml/tree/base)!
 
 ### Exercises
 
 - https://ocaml.org/exercises
 
-- https://ocamlsyntax.com/
-
 - https://ocaml-sf.org/learn-ocaml-public/
+
+### Syntax quirks
+
+- https://ocamlsyntax.com/
