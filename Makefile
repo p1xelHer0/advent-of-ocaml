@@ -8,8 +8,8 @@ help:
 	@echo "- make dependencies	Install project dependencies and developer tools"
 	@echo "- make switch		Create an local Opam switch"
 	@echo "- make build		Build the project"
-	@echo "- make day1		Run Day 1 in watch mode"
-	@echo "  ..."
+	@echo "- make day01		Run Day 1 in watch mode - yes number below 10 are prefixed with 0 I know"
+	@echo "  ...
 	@echo "- make day25		Run Day 25 in watch mode"
 	@echo "- make clean		Clean the project"
 	@echo "- make fmt		Format the project, see .ocamlformat for configuration"
@@ -33,8 +33,7 @@ switch: ## Create an local Opam switch
 
 .PHONY: build
 build: ## Build the project
-	dune build ./lib
-	dune build ./bin
+	dune build
 
 .PHONY: clean
 clean: ## Clean the project
@@ -52,5 +51,5 @@ utop: ## Run UTOP, the OCaml REPL
 reset: ## Remove local opam switch
 	rm -rf ./_opam
 
-day%: ## Run a day given the input - make day1
-	dune build @$* -fw
+day%: ## Run a day given the input - make day01
+	dune test ./day_$* -w

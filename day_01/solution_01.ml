@@ -1,70 +1,57 @@
 open ContainersLabels
 
-(* open Containers *)
-(* I prefer labeled arguments.
-
-   - This is `fold_left` with labeled argumnets, ~f and ~init are labels.
-     `List.fold_left ~f:( + ) ~init:0`
-     `List.fold_left ~init:0 ~f:( + )`
-
-   - Labeled arguments also have "punning", meaning that if `f` is defined
-     `let f = ( + )`
-     then we can omit the `:` part completly
-     `List.fold_left ~init:0` ~f`
-
-   - This is `fold_left` without labeled arguments, order matters, like you
-     are probably used to
-     `List.fold_left ( + ) 0`
-
-   See: https://ocaml.org/docs/labels
-
-   If you don't want this, open Containers instead of ContainersLabels at the
-   top of the file! *)
-
-(* Advent of Code usually provides of with some smaller examples.
-   I usually do inline testing to verify that my solution matches the examples.
-
-   OCaml supports multi-line strings by default.
-   The identation looks weird because we want to string to look exactly like
-   the test data without having to add \n \ by ourselves.
-   `String.lines` is added to convert it to a `list` to match our
-   `Util.read_file` function. *)
 let sample = {|
-12
-42
-11
-3
-|} |> String.trim |> String.lines
+199
+200
+208
+210
+200
+207
+240
+269
+260
+263
+|} |> String.trim
 
-(* This is how I usually structure this: one for A and one for B. *)
 module A = struct
-  let solve input = List.hd input |> int_of_string
+  let rec solve_aux accu l =
+    match l with
+    | [] | [ _ ] -> accu
+    | x1 :: x2 :: tl ->
+        let accu' = if x2 > x1 then succ accu else accu in
+        solve_aux accu' (x2 :: tl)
 
-  (* This is a inline test which I use as a sanity check to
-     verify the example data that is usually provided for each day:
+  let solve input =
+    let parsed = input |> String.lines |> List.map ~f:int_of_string in
+    solve_aux 0 parsed
 
-     `Test.run runs a test, the text expects three things:
-     - the type of the things we are comparing in the test
-     - the first value or expression
-     - the second value or expression which we compare to the first one. `*)
-  let%test "A: sample test" = Test.run Test.int (solve sample) 0
+  let%test "sample data" = Test.(run int (solve sample) ~expect:7)
 end
 
 module B = struct
-  (* ... *)
+  let rec solve_aux accu l =
+    match l with
+    | x1 :: x2 :: x3 :: x4 :: tl ->
+        let sliding_window_1 = Util.sum [ x1; x2; x3 ] in
+        let sliding_window_2 = Util.sum [ x2; x3; x4 ] in
+        let accu' =
+          if sliding_window_2 > sliding_window_1 then succ accu else accu
+        in
+        solve_aux accu' (x2 :: x3 :: x4 :: tl)
+    | _ -> accu
 
-  let solve input = 0
+  let solve input =
+    input |> String.lines |> List.map ~f:int_of_string |> solve_aux 0
 
-  (* ... *)
-
-  let%test "B: sample test" = Test.run Test.int (solve sample) 1
+  let%test "sample data" = Test.(run int (solve sample) ~expect:5)
 end
 
-(* Print the test and result however you want. *)
-let run () =
-  let input = Util.read_file "./day_01/input" in
-  let a = A.solve input in
-  let b = B.solve input in
+let run_1 () =
+  Run.solve_int (module A);
+  (* Run.solve_string (module A); *)
+  ()
 
-  Printf.printf "A: %i\n" a;
-  Printf.printf "B: %i\n" b
+let run_2 () =
+  (* Run.solve_int (module B); *)
+  (* Run.solve_string (module B); *)
+  ()

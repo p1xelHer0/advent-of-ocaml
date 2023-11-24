@@ -12,8 +12,8 @@ it by following the official instructions:
 After Opam has been installed you can use the provided `Makefile` to get
 going:
 
-> NOTE: If you already have an old installation of Opam make sure you run `opam
-update` before setting up
+> [!NOTE]
+> If you already have an old installation of Opam make sure you run `opam update` before setting up
 
 ```
 make setup
@@ -33,13 +33,15 @@ make day1
 
 ## Before coding
 
-https://adventofcode.com/2023/about
+> [!IMPORTANT]
+> Spend five minutes to read the about page!
+> https://adventofcode.com/2023/about
 
-> Some personal notes:
+> [!TIP]
 >
 > Advent of Code is _hard_.
 >
-> I don't work with these kind of algorithm-y problems on a day-to-day basis. I guess most people don't. It's very easy to get imposter syndrome and compare yourself to others. Others that do good in Advent of Code has probably done so for some time.
+> I don't work with these kind of algorithm-y problems on a day-to-day basis. I guess most people don't. It's very easy to get impostor syndrome and compare yourself to others. Others that do good in Advent of Code has probably done so for some time.
 >
 > Find a group and discuss the problems with others. You probably have a colleague at work that does Advent of Code without you even knowing.
 >

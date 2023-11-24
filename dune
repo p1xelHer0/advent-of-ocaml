@@ -29,6 +29,16 @@
 ; (:standard -warn-error -32))))
 
 (rule
- (alias default)
+ (mode promote)
+ (alias runtest)
+ (deps
+  (glob_files **/*.expected))
  (action
-  (echo "There is nothing to build here!\nConsider building a specific day using:\n`dune build@1`\nwhere `1` is the day.\nIf something goes wrong you can clean the project with `dune clean`.")))
+  (with-stdout-to
+   RESULT.md
+   (run ./promote.exe))))
+
+(executable
+ (name promote)
+ (public_name promote)
+ (libraries aoc containers))

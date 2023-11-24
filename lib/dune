@@ -3,6 +3,11 @@
  (libraries containers)
  (inline_tests)
  (preprocess
-  (pps ppx_inline_alcotest ppx_deriving.show))
+  (pps
+   ppx_deriving.show
+   ppx_deriving.eq
+   ppx_deriving.ord
+   ppx_deriving.make
+   ppx_inline_alcotest))
  (flags
   (:standard -open Aoc)))

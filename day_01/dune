@@ -1,68 +1,56 @@
-; Dune has three kind of programs:
-; - executable - the program we run.
-; - library - modules used by the program we run.
-; - test - an executable containing one or more tests
-;
-; NOTE: In this project we are only using inline_test to write tests. This
-; means that our tests exists in our library.
-
-(executable
- ; The "entrypoint" for this module is the `runner.ml` file
- (name runner)
- ; Because we are defining both an executable and a library
- ; we must explicitly fill the `modules` field
- (modules runner)
- ; Allows us to `dune exec 1` to run this executable
- (public_name 1)
- ; We are using our own library `solution_01`, defined below
- (libraries solution_01))
-
 (library
- ; The "entrypoint" for this module is the `solution_01.ml` file
  (name solution_01)
- ; Because we are defining both an executable and a library
- ; we must explicitly fill the `modules` field. Dune error told me this.
  (modules solution_01)
- ; Added every library here, `open` them when needed
  (libraries aoc angstrom containers oseq)
- ; This file contains inline tests
  (inline_tests)
- ; See https://ocaml.org/docs/metaprogramming#ppxs
  (preprocess
-  ; The ppx:es we are using
-  (pps ppx_inline_alcotest ppx_deriving.show))
- ; Compilation flags
+  (pps
+   ppx_deriving.show
+   ppx_deriving.eq
+   ppx_deriving.ord
+   ppx_deriving.make
+   ppx_inline_alcotest))
  (flags
-  ; `open` our Aoc module (the ../lib folder).
-  ; This saves us doing from `open Aoc` manually for things we always use.
   (:standard -open Aoc)))
 
+(executable
+ (name run_1)
+ (modules run_1)
+ (libraries solution_01))
+
+(executable
+ (name run_2)
+ (modules run_2)
+ (libraries solution_01))
+
 (rule
- ; Aliases in Dune are referred to with the @ sign.
- ; This means this alias below is `@1`.
- ; We can run this alias with `dune build @1`.
- (alias 1)
- ; Dependencies for the alias
- ; Run runner needs the input file to run the real solution
- ; Also the pretty printer where we strip some parts of the alcotest output
- (deps ./input %{project_root}/bin/pp.exe)
- ; This alias is an action - we want to do something
+ (write-file run_1.ml "let () = Solution_01.run_1 ()"))
+
+(rule
+ (write-file run_2.ml "let () = Solution_01.run_2 ()"))
+
+(rule
+ (with-stdout-to
+  p1.out
+  (run ./run_1.exe %{dep:input.txt})))
+
+(rule
+ (with-stdout-to
+  p2.out
+  (run ./run_2.exe %{dep:input.txt})))
+
+(rule
+ (alias runtest)
  (action
-  (chdir
-   %{project_root}
-   ; Progn runs multiple processes in sequence
-   (progn
-    ; First we build day_01
-    (run dune build ./day_01)
-    ; Pipe the result of the inline test to `pp.exe`
-    (pipe-stdout
-     ; Allow 1 as a non-erronous exit code to prevent dune stack trace
-     (with-accepted-exit-codes
-      (or 0 1)
-      ; Run inline tests for day_01
-      (run
-       ./day_01/.solution_01.inline-tests/inline_test_runner_solution_01.exe))
-     ; Filter some output of the test
-     (run ./bin/pp.exe))
-    ; Run the day_01 program itself
-    (run ./day_01/runner.exe)))))
+  (diff p1.expected p1.out)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff p2.expected p2.out)))
+
+; (rule
+;  (alias runtest)
+;  (action
+;   (with-stdout-to
+;     ./bin/pp.exe)))
