@@ -1,14 +1,18 @@
 (lang dune 3.11)
+
 ; dune-project is the configuration file for the project
 
 (name aoc)
 
 ; Let Dune generate our `aoc.opam` file to let
 ; opam know what what packages to install in our switch.
+
 (generate_opam_files true)
 
 ; You can do this!
+
 (authors "You")
+
 (maintainers "You")
 
 (homepage "https://adventofcode.com")
@@ -17,9 +21,11 @@
 ; Perhaps your favorite streamer or a community forum you are a part of are
 ; doing it as well! Some Discord channels have a dedicated #advent-of-code
 ; channel.
+
 (bug_reports "https://www.reddit.com/r/adventofcode/")
 
 ; Do whatever you want, fork it, clone it, remove the `.git` folder
+
 (license UNLICENSE)
 
 (package
