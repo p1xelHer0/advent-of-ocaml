@@ -17,12 +17,6 @@ Let's do some [Advent of Code 2023](https://adventofcode.com/2023/) in [OCaml](h
 >
 > https://adventofcode.com/2023/leaderboard/private
 
-## Minimal setup
-
-> [!IMPORTANT]
-> You don't wanna read shit or test shit? Consider checking out the [minimal
-> branch](TLDR) where we print to `stdout` and get on with our lives.
-
 ## Setup
 
 > [!WARNING]
@@ -93,6 +87,17 @@ make day01
 
 - Take a look in the `./exmaples` to see some uses of testing, modules and
   parsing
+
+### Running without tests
+
+If you don't wanna run tests and just print to `stdout` you can do the
+following:
+
+```
+dune exec ./day_01/run_1.exe ./day_01/input.txt -w
+```
+
+> Change your `day_01` and `run_1` accordingly to day and part
 
 ### The long story
 
@@ -211,9 +216,6 @@ because...? I don't care lmao:
 - PPXes are cool
 
 - Tests are not cool but good sometimes
-
-Also, you don't need to use these. Consider checking out the [minimal branch]()
-if you don't care about libraries or testing.
 
 ### [Containers](https://github.com/c-cube/ocaml-containers/) and [OSeq](https://github.com/c-cube/oseq)
 
