@@ -2,12 +2,12 @@
 opam-version: "2.0"
 synopsis: "Advent of Code in OCaml"
 description:
-  "This repository contains a boilerplate project to solve Advent of Code."
-maintainer: ["You"]
-authors: ["You"]
+  "This repository contains a boilerplate project to solve Advent of Code in OCaml using Dune."
+maintainer: ["p1xelHer0"]
+authors: ["p1xelHer0"]
 license: "UNLICENSE"
-homepage: "https://adventofcode.com"
-bug-reports: "https://www.reddit.com/r/adventofcode/"
+homepage: "https://github.com/p1xelHer0/advent-of-ocaml"
+bug-reports: "https://github.com/p1xelHer0/advent-of-ocaml/issues"
 depends: [
   "ocaml" {>= "5.1.0"}
   "dune" {>= "3.11" & build & >= "3.11.1"}
@@ -15,11 +15,9 @@ depends: [
   "containers" {>= "3.12"}
   "oseq" {>= "0.5"}
   "psq" {>= "0.2.1"}
-  "sexplib" {>= "0.16.0"}
   "ppx_deriving" {>= "5.2.1"}
-  "ppx_inline_test" {>= "0.16.1"}
-  "ppx_assert" {with-test & >= "0.16.0"}
-  "ppx_expect" {with-test & >= "0.16.0"}
+  "alcotest" {with-test & >= "1.7.0"}
+  "ppx_inline_alcotest" {with-test & >= "1.0.0"}
   "ocaml-lsp-server" {with-dev-setup & >= "1.16.2"}
   "ocamlformat" {with-dev-setup & >= "0.26.1"}
   "utop" {with-dev-setup & >= "2.13.1"}

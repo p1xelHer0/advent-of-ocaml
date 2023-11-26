@@ -1,32 +1,27 @@
 (lang dune 3.11)
-; dune-project is the configuration file for the project
 
+; dune-project is the configuration file for the project
 (name aoc)
 
 ; Let Dune generate our `aoc.opam` file to let
 ; opam know what what packages to install in our switch.
 (generate_opam_files true)
 
-; You can do this!
-(authors "You")
-(maintainers "You")
+(authors "p1xelHer0")
 
-(homepage "https://adventofcode.com")
+(maintainers "p1xelHer0")
 
-; Look out for other communities to talk about Advent of Code.
-; Perhaps your favorite streamer or a community forum you are a part of are
-; doing it as well! Some Discord channels have a dedicated #advent-of-code
-; channel.
-(bug_reports "https://www.reddit.com/r/adventofcode/")
+(homepage "https://github.com/p1xelHer0/advent-of-ocaml")
 
-; Do whatever you want, fork it, clone it, remove the `.git` folder
+(bug_reports "https://github.com/p1xelHer0/advent-of-ocaml/issues")
+
 (license UNLICENSE)
 
 (package
  (name aoc)
  (synopsis "Advent of Code in OCaml")
  (description
-  "This repository contains a boilerplate project to solve Advent of Code.")
+  "This repository contains a boilerplate project to solve Advent of Code in OCaml using Dune.")
  (depends
   ; Compiler version
   (ocaml
@@ -49,26 +44,21 @@
   ; Functional Priority Search Queues
   (psq
    (>= 0.2.1))
-  ; Library for serializing OCaml values to and from S-expressions
-  (sexplib
-    (>= 0.16.0))
   ; Mainly for ppx_deriving.show
   ; show derives a function that inspects a value; that is, pretty-prints it with OCaml syntax
   (ppx_deriving
    (>= 5.2.1))
-  (ppx_inline_test
-   (>= 0.16.1))
-  (ppx_assert
+  ; A lightweight and colourful test framework
+  (alcotest
    (and
-    ; For tests
+    ; Test dependency - https://opam.ocaml.org/doc/Manual.html#pkgvar-with-test
     :with-test
-    (>= 0.16.0)))
-  (ppx_expect
+    (>= 1.7.0)))
+  (ppx_inline_alcotest
    (and
-    ; For tests
+    ; Test dependency
     :with-test
-    (>= 0.16.0)))
-  ; An LSP server for OCaml.
+    (>= 1.0.0)))
   (ocaml-lsp-server
    (and
     ; Developer tooling - https://opam.ocaml.org/doc/Manual.html#pkgvar-with-dev-setup
