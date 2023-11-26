@@ -1,0 +1,50 @@
+(library
+ (name solution_06)
+ (modules solution_06)
+ (libraries aoc angstrom containers oseq)
+ (inline_tests)
+ (preprocess
+  (pps
+   ppx_deriving.show
+   ppx_deriving.eq
+   ppx_deriving.ord
+   ppx_deriving.make
+   ppx_inline_alcotest))
+ (flags
+  (:standard -open Aoc)))
+
+(executable
+ (name run_1)
+ (modules run_1)
+ (libraries solution_06))
+
+(executable
+ (name run_2)
+ (modules run_2)
+ (libraries solution_06))
+
+(rule
+ (write-file run_1.ml "let () = Solution_06.run_1 ()"))
+
+(rule
+ (write-file run_2.ml "let () = Solution_06.run_2 ()"))
+
+(rule
+ (with-stdout-to
+  p1.out
+  (run ./run_1.exe %{dep:input.txt})))
+
+(rule
+ (with-stdout-to
+  p2.out
+  (run ./run_2.exe %{dep:input.txt})))
+
+(rule
+ (alias runtest)
+ (action
+  (diff p1.expected p1.out)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff p2.expected p2.out)))

@@ -1,0 +1,99 @@
+; Dune has three kind of programs:
+; - executable - the program we run
+; - library - modules used by the program we run
+; - test - an executable containing one or more tests
+;
+; NOTE: In this project we are only using inline_test to write tests. This
+; means that our tests exists in our library. We don't have a "test" folder.
+
+(library
+ ; The "entrypoint" for this module is the `solution_01.ml` file
+ (name solution_01)
+ ; Because we are defining both an executable and a library
+ ; we must explicitly fill the `modules` field
+ (modules solution_01)
+ ; Define the libraries we want to be able to use within the module
+ ; Use `open Library` to use them
+ (libraries aoc angstrom containers oseq)
+ ; This module contains inline tests
+ (inline_tests)
+ ; This module contains PPX:es
+ ; See https://ocaml.org/docs/metaprogramming#ppxs
+ (preprocess
+  ; The ppx:es we are using
+  (pps
+   ppx_deriving.show
+   ppx_deriving.eq
+   ppx_deriving.ord
+   ppx_deriving.make
+   ppx_inline_alcotest))
+ (flags
+  ; `open` our Aoc module (the ../lib folder).
+  ; This saves us doing from `open Aoc` manually for things we always use.
+  (:standard -open Aoc)))
+
+(executable
+ ; The "entrypoint" for this module is the `run_1.ml` file
+ (name run_1)
+ ; Because we are defining both an executable and a library
+ ; we must explicitly fill the `modules` field
+ (modules run_1)
+ ; The executable only runs the library `Solution_01`
+ (libraries solution_01))
+
+; Same as above but 2
+
+(executable
+ ; The "entrypoint" for this module is the `run_2.ml` file
+ (name run_2)
+ ; Because we are defining both an executable and a library
+ ; we must explicitly fill the `modules` field
+ (modules run_2)
+ ; The executable only runs the library `Solution_01`
+ (libraries solution_01))
+
+(rule
+ ; Let dune create a executable file intead of having it taking up space in our
+ ; project. This means we have a "virtual" executable called `run_1.exe`.
+ ; This way you can also run your solution for the day by running:
+ ; `dune exec ./day_01/run_1.exe ./day_01/input.txt`
+ (write-file run_1.ml "let () = Solution_01.run_1 ()"))
+
+; Same as above but 2
+
+(rule
+ ; Let dune create a executable file intead of having it taking up space in our
+ ; project. This means we have a "virtual" executable called `run_2.exe`.
+ ; This way you can also run your solution for the day by running:
+ ; `dune exec ./day_01/run_2.exe ./day_01/input.txt`
+ (write-file run_2.ml "let () = Solution_01.run_2 ()"))
+
+(rule
+ ; Redirect the output of `run_1.exe` to a file to use for diffing.
+ (with-stdout-to
+  p1.out
+  (run ./run_1.exe %{dep:input.txt})))
+
+; Same as above but 2
+
+(rule
+ ; Redirect the output of `run_2.exe` to a file to use for diffing.
+ (with-stdout-to
+  p2.out
+  (run ./run_2.exe %{dep:input.txt})))
+
+(rule
+ ; The runtest alias should also run the diff between
+ ; our "expected" and "out" file
+ (alias runtest)
+ (action
+  (diff p1.expected p1.out)))
+
+; Same as above but 2
+
+(rule
+ ; The runtest alias should also run the diff between
+ ; our "expected" and "out" file
+ (alias runtest)
+ (action
+  (diff p2.expected p2.out)))
