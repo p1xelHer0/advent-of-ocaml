@@ -1,6 +1,0 @@
-(executable
- (name pp)
- (public_name pp)
- (libraries aoc angstrom containers)
- (flags
-  (:standard -open Aoc)))

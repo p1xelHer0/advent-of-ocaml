@@ -34,11 +34,13 @@
  (deps
   (glob_files **/*.expected))
  (action
-  (with-stdout-to
-   RESULT.md
-   (run ./promote.exe))))
+  (progn
+   (with-stdout-to
+    COMPLETED.md
+    (run ./completed_days.exe))
+   (bash "cat COMPLETED.md"))))
 
 (executable
- (name promote)
- (public_name promote)
+ (name completed_days)
+ (public_name completed_days)
  (libraries aoc containers))

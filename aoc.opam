@@ -2,12 +2,12 @@
 opam-version: "2.0"
 synopsis: "Advent of Code in OCaml"
 description:
-  "This repository contains a boilerplate project to solve Advent of Code."
-maintainer: ["You"]
-authors: ["You"]
+  "This repository contains a boilerplate project to solve Advent of Code in OCaml using Dune."
+maintainer: ["p1xelHer0"]
+authors: ["p1xelHer0"]
 license: "UNLICENSE"
-homepage: "https://adventofcode.com"
-bug-reports: "https://www.reddit.com/r/adventofcode/"
+homepage: "https://github.com/p1xelHer0/advent-of-ocaml"
+bug-reports: "https://github.com/p1xelHer0/advent-of-ocaml/issues"
 depends: [
   "ocaml" {>= "5.1.0"}
   "dune" {>= "3.11" & build & >= "3.11.1"}

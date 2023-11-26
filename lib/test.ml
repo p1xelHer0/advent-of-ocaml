@@ -1,6 +1,5 @@
-(* Wrapper I use around Alcotest
-   See usage in `examples.ml` at comment "Test usage". *)
-let run typ received ~expect = Alcotest.check typ "" received expect
+(* Alcotest wrappers, see ./examples/testing.ml *)
+let run typ received ~expect = Alcotest.check typ "" expect received
 let bool = Alcotest.bool
 let int = Alcotest.int
 let int32 = Alcotest.int32
