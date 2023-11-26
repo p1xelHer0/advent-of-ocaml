@@ -97,8 +97,3 @@
  (alias runtest)
  (action
   (diff p2.expected p2.out)))
-
-(rule
- (alias promote)
- (action
-  (run ../days_completed.exe)))
