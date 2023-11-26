@@ -1,0 +1,11 @@
+(library
+ (name aoc)
+ (libraries containers)
+ (inline_tests)
+ (preprocess
+  (pps
+   ppx_deriving.show
+   ppx_deriving.eq
+   ppx_deriving.ord
+   ppx_deriving.make
+   ppx_inline_alcotest)))

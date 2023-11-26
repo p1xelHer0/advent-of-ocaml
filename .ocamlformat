@@ -1,0 +1,7 @@
+# Configuration of `ocamlformat`
+# check `man ocamlformat` for configuration options
+profile = default
+# Match the version installed
+version = 0.26.1
+# We want to be able to use linebreaks for test data - don't format those
+break-string-literals = never
