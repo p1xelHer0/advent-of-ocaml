@@ -233,7 +233,7 @@ Priority Search Queue. I've used this when implementing the Dijkstra's algorithm
 
 ### [ppx_deriving](https://github.com/ocaml-ppx/ppx_deriving)
 
-The whole thing is about generating code! See `./examples/modules` under the `(* ppx_deriving *)` comment.
+The whole thing is about generating code! See `./examples/modules.ml` under the `(* ppx_deriving *)` comment.
 
 ### [Alcotest](https://github.com/mirage/alcotest) with [ppx_inline_alcotest](https://gitlab.com/gopiandcode/ppx-inline-alcotest)
 
