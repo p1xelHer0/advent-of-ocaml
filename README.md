@@ -42,8 +42,30 @@ Running `make` should give you some instructions. Lets setup the project:
 make setup
 ```
 
-This install OCaml itself, the dependencies for the project and also [ocaml-lsp-server](https://github.com/ocaml/ocaml-lsp),
+This install OCaml itself in a local [Opam switch](https://ocaml.org/docs/opam-switch-introduction), the dependencies for the project and also [ocaml-lsp-server](https://github.com/ocaml/ocaml-lsp),
 [ocamlformat](https://github.com/ocaml-ppx/ocamlformat) and [utop](https://github.com/ocaml-community/utop).
+
+Before running a command, make sure your Opam environment is in sync with your
+local switch. You can do this by running
+
+```
+opam switch
+```
+
+This should tell you the following:
+
+```
+[NOTE] Current switch has been selected based on the current directory.
+       The current global system switch is default.
+```
+
+> [!CAUTION]
+> Sometime the current switch can get out of sync when navigating back and fourth
+> between folders, you can sync the switch by running:
+>
+> ```
+> eval $(opam env)
+> ```
 
 ## Before coding
 
@@ -78,14 +100,14 @@ make day01
 
 ### TL;DR
 
-- Paste your puzzle input into ./day_01/input.txt
+- Paste your puzzle input into `./day_01/input.txt`
 
 - open `./day_01/solution_01.ml` and read the comments
 
 - Put general utility function in the `./lib/utils.ml` module - use them in your
   solution with the `Util` module
 
-- Take a look in the `./exmaples` to see some uses of testing, modules and
+- Take a look in the `./examples` to see some uses of testing, modules and
   parsing
 
 ### Running without tests

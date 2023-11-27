@@ -57,7 +57,7 @@ module Part_1 = struct
   (* This needs to be a
      `string -> int`
      or
-     `string -> string*)
+     `string -> string *)
   let solve input =
     let parsed = input |> String.lines |> List.map ~f:int_of_string in
     solve_aux 0 parsed
