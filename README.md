@@ -3,7 +3,7 @@
 Let's do some [Advent of Code 2023](https://adventofcode.com/2023/) in [OCaml](https://ocaml.org/)!
 
 > [!NOTE]
-> Please open an issue or reach out to me on [Twitter](https://twitter.com/p1xelHer0)
+> Please open an issue or reach out to me on [Twitter](https://twitter.com/p1xelHer0) or [Mastodon](https://hachyderm.io/@p1xelHer0)
 > if you have any questions, recomendations or just want to say hi!
 
 ## Leaderboard
